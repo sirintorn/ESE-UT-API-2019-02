@@ -6,6 +6,7 @@ import com.ese.api.uptime.repo.ProductionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,10 @@ public class ProductionController {
         return productionRepository.findById(productionId).orElseThrow(() -> new ResourceNotFoundException("Production [productionId="+productionId+"] can't be found"));
     }
 
-    @GetMapping(value = "/getProductionByMachineReg/{machineRegisterId}")
+    @GetMapping(value = "/getProductionByMachineReg/{machineRegisterId}/{factoryId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<Production> findByMachineRegisterId (@PathVariable Integer machineRegisterId){
-        return productionRepository.findByMachineRegisterId(machineRegisterId);
-        //.orElseThrow(() -> new ResourceNotFoundException("Production [machineRegisterId="+machineRegisterId+"] can't be found"));
+    public List<Production> findByMachineRegisterId (@PathVariable Integer machineRegisterId,@PathVariable Integer factoryId){
+        return productionRepository.findByMachineRegisterId(machineRegisterId,factoryId);
 
 
     }
